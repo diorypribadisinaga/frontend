@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DaftarJual from "./page/DaftarJual";
+import Home from "./page/Home";
+import InfoProduk from "./page/InfoProduk";
+import InfoProfil from "./page/InfoProfil";
+import Konfirmasi from "./page/Konfirmasi";
+import Login from './page/Login';
+import Masuk from "./page/Masuk";
+import Preview from "./page/Preview";
+import PreviewProduk from "./page/PreviewProduk";
+import Register from "./page/Register";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Masuk />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="konfirmasi/:email" element={<Konfirmasi />} />
+        <Route path="home" element={<Home />} />
+        <Route path="infoprofil" element={<InfoProfil />} />
+        <Route path="infoproduk" element={<InfoProduk />} />
+        <Route path="daftarjual" element={<DaftarJual />} />
+        <Route path="preview" element={<Preview />} />
+        <Route path="preview/produk/:id" element={<PreviewProduk />} />
+      </Routes>
+    </BrowserRouter >
   );
 }
 
