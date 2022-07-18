@@ -12,6 +12,7 @@ import { IoMdNotificationsOutline } from "react-icons/io"
 import Card from '../components/card/Card';
 import Carousel from '../components/carousel';
 import secondHand from "../image/camera.png"
+axios.defaults.withCredentials = true;
 
 export default function Home() {
     const [showA, setShowA] = useState(false);

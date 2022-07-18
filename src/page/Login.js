@@ -30,7 +30,8 @@ export default function Login() {
                 email: email,
                 password: password,
             }, {
-                withCredentials: true
+                withCredentials: true,
+                headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
             })
             // console.log(response.data);
             const data = await response.data
