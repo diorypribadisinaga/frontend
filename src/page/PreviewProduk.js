@@ -41,26 +41,13 @@ export default function PreviewProduk() {
             navigasi("/")
         }
     }
-
-    const beli = () => {
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(money);
+    };
 
     const navigasi = useNavigate()
     const content1 = <div>
@@ -95,18 +82,25 @@ export default function PreviewProduk() {
                     <div className='col-lg-4'>
                         <div className={style.kanan}>
                             <strong>{product.nama_produk}</strong><br />
-                            <small>Kategori {kategori.macam}</small>
-                            <strong className='mt-3 d-block'>Rp {product.harga}</strong>
+                            <small>{kategori.macam}(Kategori)</small>
+                            <strong className='mt-3 d-block'>{formatRupiah(product.harga)}</strong>
                             <div className='row'>
                                 <div className='col-lg-12 col-12'>
-                                    <Button className="form-control mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style={{
+                                    {product.id_penjual != user.id ? <Button className="form-control mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style={{
                                         background: '#7126B5',
                                         borderColor: '#7126B5',
                                         borderRadius: '16px',
                                         padding: '12px 16px',
                                     }}>
                                         Saya Tertarik dan Ingin Nego
-                                    </Button>
+                                    </Button> : <Button className="form-control mt-2" style={{
+                                        background: '#7126B5',
+                                        borderColor: '#7126B5',
+                                        borderRadius: '16px',
+                                        padding: '12px 16px',
+                                    }}>
+                                        Update Produk
+                                    </Button>}
                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -122,7 +116,7 @@ export default function PreviewProduk() {
                                                         </div>
                                                         <div className="">
                                                             <strong >{product.nama_produk}</strong>
-                                                            <h6>Rp {product.harga}</h6>
+                                                            <h6>{formatRupiah(product.harga)}</h6>
                                                         </div>
                                                     </div>
                                                     <div className='mt-3'>

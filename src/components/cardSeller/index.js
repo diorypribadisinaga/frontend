@@ -46,6 +46,14 @@ export default function CardSeller() {
         }
     }, []);
 
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(money);
+    };
+
 
     return (
         <>
@@ -86,7 +94,7 @@ export default function CardSeller() {
                                                 <Card.Title>{product.nama_produk}</Card.Title>
                                                 <Card.Text>
                                                     <small>{product.Kategori.macam}</small><br />
-                                                    <strong>Rp. {product.harga}</strong>
+                                                    <strong>{formatRupiah(product.harga)}</strong>
                                                 </Card.Text>
                                             </Card.Body>
                                         </Card>

@@ -31,6 +31,14 @@ export default function Preview({ foto, prew, addProduct, deskripsi, nama_produk
         fetchdata()
     }, []);
 
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(money);
+    };
+
     const navigasi = useNavigate()
     const content1 = <div>
         <BsListUl onClick={() => navigasi("/daftarjual")} style={{ width: "47px", height: "25px", cursor: "pointer" }} />
@@ -65,7 +73,7 @@ export default function Preview({ foto, prew, addProduct, deskripsi, nama_produk
                         <div className={style.kanan}>
                             <strong>{nama_produk}</strong><br />
                             <small>Kategori {kategori.filter((kat) => kat.id == id_kategori).map(kat => (kat.macam))}</small>
-                            <strong className='mt-3 d-block'>Rp {harga}</strong>
+                            <strong className='mt-3 d-block'>{formatRupiah(harga)}</strong>
                             <div className='row'>
                                 <div className='col-lg-12 col-6'>
                                     <Button onClick={addProduct} className="form-control mt-2" type="submit" style={{

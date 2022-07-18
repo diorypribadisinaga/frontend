@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { BsFilter } from "react-icons/bs"
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function CardProduk() {
+export default function CardProduk({ user }) {
     const [products, setProduct] = useState([]);
     const [produk, setProduk] = useState([])
     const [benar, SetBenar] = useState(0)
@@ -61,6 +61,13 @@ export default function CardProduk() {
     const preview = (idproduk) => {
         navigasi(`/preview/produk/${idproduk}`)
     }
+    const formatRupiah = (money) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(money);
+    };
 
     const Filter = (keadaan) => {
         if (keadaan === "termurah") {
@@ -160,7 +167,7 @@ export default function CardProduk() {
                             right: 20,
                         }}
                     />
-                    {/* <div className="dropdown mx-2">
+                    <div className="dropdown mx-2">
                         <button
                             className="btn btn-secondary"
                             type="button"
@@ -175,12 +182,13 @@ export default function CardProduk() {
                             <li><button onClick={() => Filter("termahal")} className="dropdown-item btn" href="#">Harga Termahal</button></li>
                             <li><button onClick={() => Filter("terbaru")} className="dropdown-item btn" href="#">Produk Terbaru</button></li>
                         </ul>
-                    </div> */}
+                    </div>
                 </div>
             </div>
-            {console.log("benar", benar)}
+            {/* {console.log("benar", benar)}
             {console.log(filter)}
-            {console.log("angka", angka)}
+            {console.log("angka", angka)} */}
+            {console.log(user)}
             {benar === 0 ? <div className="row" >
                 {products.map((product, index) => (
                     <div key={index} className="col-lg-2 col-sm-6 col-6 col-md-6 mt-2">
@@ -190,7 +198,7 @@ export default function CardProduk() {
                                 <Card.Title>{product.nama_produk}</Card.Title>
                                 <Card.Text>
                                     <small>{product.Kategori.macam}</small><br />
-                                    <strong>Rp. {product.harga}</strong>
+                                    <strong>{formatRupiah(product.harga)}</strong>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -199,13 +207,13 @@ export default function CardProduk() {
             </div> : benar === 1 ? (produk.length !== 0 ? <div className="row" >
                 {produk.map((product, index) => (
                     <div key={index} className="col-lg-2 col-6 col-sm-12 col-md-6 mt-2">
-                        <Card key={product.id}>
+                        <Card style={{ cursor: "pointer" }} onClick={() => preview(product.id)} key={product.id}>
                             <Card.Img variant="top" src={product.foto} style={{ width: "100%", height: "150px" }} alt="jam" />
                             <Card.Body>
                                 <Card.Title>{product.nama_produk}</Card.Title>
                                 <Card.Text>
                                     <small>{product.Kategori.macam}</small><br />
-                                    <strong>Rp. {product.harga}</strong>
+                                    <strong>{formatRupiah(product.harga)}</strong>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -214,13 +222,13 @@ export default function CardProduk() {
             </div> : <h1 style={{ marginBottom: "20px", textAlign: "center" }}>Data Kategori Kosong</h1>) : (filter.length !== 0 ? <div className="row" >
                 {filter.map((product, index) => (
                     <div key={index} className="col-lg-2 col-6 col-sm-12 col-md-6 mt-2">
-                        <Card key={product.id}>
+                        <Card style={{ cursor: "pointer" }} onClick={() => preview(product.id)} key={product.id}>
                             <Card.Img variant="top" src={product.foto} style={{ width: "100%", height: "150px" }} alt="jam" />
                             <Card.Body>
                                 <Card.Title>{product.nama_produk}</Card.Title>
                                 <Card.Text>
                                     <small>{product.Kategori.macam}</small><br />
-                                    <strong>Rp. {product.harga}</strong>
+                                    <strong>{formatRupiah(product.harga)}</strong>
                                 </Card.Text>
                             </Card.Body>
                         </Card>

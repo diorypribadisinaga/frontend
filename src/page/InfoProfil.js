@@ -115,7 +115,7 @@ export default function InfoProfil() {
                 // navigasi("/home")
                 // toggleShowA()
                 klik()
-                window.location.reload()
+                // window.location.reload()
             } else {
                 await axios.put(`http://localhost:8000/update/${user.id}`, {
                     nama: nama,
@@ -125,7 +125,7 @@ export default function InfoProfil() {
                 })
                 // navigasi("/home")
                 klik()
-                window.location.reload()
+                // window.location.reload()
             }
         } catch (err) {
             console.log(err);

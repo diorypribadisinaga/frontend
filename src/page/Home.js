@@ -63,7 +63,7 @@ export default function Home() {
             <Carousel />
 
             <div className='container'>
-                <Card />
+                <Card user={user} />
             </div>
         </>
     )
