@@ -16,16 +16,24 @@ export default function CardProduk({ user }) {
     const navigasi = useNavigate()
     const [filter, SetFilter] = useState([])
     const [angka, setAngka] = useState(0)
+    const [Kategori, setKategori] = useState([])
 
 
     useEffect(() => {
         getProducts();
+        getKategori();
     }, []);
+
+    const getKategori = async () => {
+        let response = await axios.get("http://localhost:8000/v1/Produk/add/form")
+        setKategori(response.data)
+    }
 
     const getProducts = async () => {
         let response = await axios.get("http://localhost:8000/v1/Produk");
         setProduct(response.data);
         setAngka(0)
+        // response = await axios.get("http://localhost:8000/v1/Produk/add/form")
     };
 
     const klik = (jumlah) => {
@@ -68,8 +76,10 @@ export default function CardProduk({ user }) {
             minimumFractionDigits: 0,
         }).format(money);
     };
+    const [kondisi, setKondisi] = useState("")
 
     const Filter = (keadaan) => {
+        setKondisi(keadaan)
         if (keadaan === "termurah") {
             if (benar === 0) {
                 getProducts()
@@ -81,20 +91,20 @@ export default function CardProduk({ user }) {
                 SetFilter(produk.sort(function (a, b) {
                     return a.harga - b.harga;
                 }))
-                SetBenar(2)
+                SetBenar(1)
             } else if (benar === 2) {
                 if (angka !== 0) {
                     kategori(angka)
                     SetFilter(produk.sort(function (a, b) {
                         return a.harga - b.harga;
                     }))
-                    SetBenar(1)
+                    SetBenar(2)
                 } else {
                     getProducts()
                     SetFilter(products.sort(function (a, b) {
                         return a.harga - b.harga;
                     }))
-                    SetBenar(1)
+                    SetBenar(2)
                 }
             }
         } else if (keadaan === "termahal") {
@@ -103,48 +113,54 @@ export default function CardProduk({ user }) {
                 SetFilter(products.sort(function (a, b) {
                     return b.harga - a.harga;
                 }))
+                SetBenar(2)
             } else if (benar === 1) {
                 SetFilter(produk.sort(function (a, b) {
                     return b.harga - a.harga;
                 }))
+                SetBenar(1)
             } else if (benar === 2) {
                 if (angka !== 0) {
                     kategori(angka)
                     SetFilter(produk.sort(function (a, b) {
                         return b.harga - a.harga;
                     }))
+                    SetBenar(2)
                 } else {
                     getProducts()
                     SetFilter(products.sort(function (a, b) {
                         return b.harga - a.harga;
                     }))
+                    SetBenar(2)
                 }
             }
-            SetBenar(2)
         } else if (keadaan === "terbaru") {
             if (benar === 0) {
                 getProducts()
                 SetFilter(products.sort(function (a, b) {
                     return b.id - a.id;
                 }))
+                SetBenar(2)
             } else if (benar === 1) {
                 SetFilter(produk.sort(function (a, b) {
                     return b.id - a.id;
                 }))
+                SetBenar(1)
             } else if (benar === 2) {
                 if (angka !== 0) {
                     kategori(angka)
                     SetFilter(produk.sort(function (a, b) {
                         return b.id - a.id;
                     }))
+                    SetBenar(2)
                 } else {
                     getProducts()
                     SetFilter(products.sort(function (a, b) {
                         return b.id - a.id;
                     }))
+                    SetBenar(2)
                 }
             }
-            SetBenar(2)
         }
     }
 
@@ -154,11 +170,15 @@ export default function CardProduk({ user }) {
                 <h4 className='mb-3'>Telesuri Kategori</h4>
                 <div className='d-flex' style={{ flexWrap: "wrap" }}>
                     <Button className='mx-2 mb-2' onClick={() => SetBenar(0)} style={{ background: "#7126B5", borderColor: "#7126B5", borderRadius: "10px" }}><BsSearch /> Semua </Button>
-                    <Button className='mx-2 mb-2' onClick={() => kategori(1)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Sepatu</Button>
+                    {/* <Button className='mx-2 mb-2' onClick={() => kategori(1)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Sepatu</Button>
                     <Button className='mx-2 mb-2' onClick={() => kategori(2)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Kendaraan</Button>
                     <Button className='mx-2 mb-2' onClick={() => kategori(3)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Elektronik</Button>
                     <Button className='mx-2 mb-2' onClick={() => kategori(4)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Baju</Button>
-                    <Button className='mx-2 mb-2' onClick={() => kategori(5)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Celena</Button>
+                    <Button className='mx-2 mb-2' onClick={() => kategori(5)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch /> Celena</Button> */}
+                    {Kategori.map((kat) => (
+                        <Button className='mx-2 mb-2' onClick={() => kategori(kat.id)} style={{ background: "#E2D4F0", borderColor: "#E2D4F0", color: "black", borderRadius: "10px" }}><BsSearch />{kat.macam}</Button>
+                    ))}
+                    {console.log("benar", benar, "angka", angka, "kondisi", kondisi)}
                     <Toaster
                         containerStyle={{
                             top: 320,
@@ -188,7 +208,7 @@ export default function CardProduk({ user }) {
             {/* {console.log("benar", benar)}
             {console.log(filter)}
             {console.log("angka", angka)} */}
-            {console.log(user)}
+            {/* {console.log(user)} */}
             {benar === 0 ? <div className="row" >
                 {products.map((product, index) => (
                     <div key={index} className="col-lg-2 col-sm-6 col-6 col-md-6 mt-2">

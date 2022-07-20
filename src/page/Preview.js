@@ -10,7 +10,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import secondHand from "../image/camera.png"
 
-export default function Preview({ foto, prew, addProduct, deskripsi, nama_produk, kategori, id_kategori, harga }) {
+export default function Preview({ foto, prew, addProduct, deskripsi, nama_produk, kategori, id_kategori, harga, Products }) {
     const [user, SetUser] = useState("")
 
     const fetchdata = async () => {

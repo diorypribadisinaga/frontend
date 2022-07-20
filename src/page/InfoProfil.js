@@ -17,9 +17,6 @@ const contentUser = <div className="my-2"
     }}>
     Navbarsa
 </div>
-// const kamera1 = <div>
-
-// </div>
 
 export default function InfoProfil() {
     const [user, SetUser] = useState("")
@@ -85,6 +82,10 @@ export default function InfoProfil() {
         // />
     };
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -115,7 +116,8 @@ export default function InfoProfil() {
                 // navigasi("/home")
                 // toggleShowA()
                 klik()
-                // window.location.reload()
+                await sleep(2 * 1000)
+                navigasi('/home')
             } else {
                 await axios.put(`http://localhost:8000/update/${user.id}`, {
                     nama: nama,
@@ -125,7 +127,9 @@ export default function InfoProfil() {
                 })
                 // navigasi("/home")
                 klik()
-                // window.location.reload()
+                await sleep(2 * 1000)
+                navigasi('/home')
+
             }
         } catch (err) {
             console.log(err);
@@ -136,6 +140,7 @@ export default function InfoProfil() {
     const Kembali = () => {
         navigasi("/home")
     }
+
 
     return (
         <>

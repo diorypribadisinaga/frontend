@@ -88,7 +88,7 @@ export default function CardSeller() {
                                 </div> */}
                                 {products.length != 0 ? products.map((product, index) => (
                                     <div key={index} className="col-lg-4 col-sm-6 col-6 col-md-6 mt-2">
-                                        <Card key={product.id}>
+                                        <Card style={{ cursor: "pointer" }} onClick={() => navigasi(`/preview/produk/${product.id}`)} key={product.id}>
                                             <Card.Img variant="top" src={product.foto} style={{ width: "100%", height: "150px" }} alt="jam" />
                                             <Card.Body>
                                                 <Card.Title>{product.nama_produk}</Card.Title>

@@ -4,10 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-
+import { Link } from 'react-router-dom';
 
 export default function Nav(props) {
     const { content, content1, contentUser } = props;
+
     return (
         <Navbar
             expand="lg"
@@ -15,9 +16,14 @@ export default function Nav(props) {
         >
             <Container className="py-3">
                 <Form className='d-flex'>
-                    <Navbar.Brand>
+                    <Link className='py-1' style={{ textDecoration: "none" }} to={"/home"}>
+                        <Navbar.Brand>
+                            {contentUser}
+                        </Navbar.Brand>
+                    </Link>
+                    {/* <Navbar.Brand style={{ cursor: "pointer" }} onClick={() => navigasi("/home")}>
                         {contentUser}
-                    </Navbar.Brand>
+                    </Navbar.Brand> */}
                     {/* {contentUser} */}
                     <Col sm="4" md="5" lg="7" className='my-3'>
                         {content}

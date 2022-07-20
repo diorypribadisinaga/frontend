@@ -10,6 +10,7 @@ import { BiArrowBack } from 'react-icons/bi';
 import { FiPlus } from "react-icons/fi";
 import styles from "./styles/InfoProduk.module.css"
 import toast, { Toaster } from 'react-hot-toast';
+import CurrencyFormat from 'react-currency-format';
 import Preview from './Preview';
 const contentUser = <div className="my-2"
     style={{
@@ -88,6 +89,10 @@ export default function InfoProduk() {
         })
     }
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     const addProduct = async (e) => {
         e.preventDefault();
         const form = new FormData();
@@ -122,11 +127,12 @@ export default function InfoProduk() {
                     deskripsi: deskripsi,
                     foto: response.data.url
                 })
-                response = await axios.post("http://localhost:8000/v1/Produk/email")
-                // navigasi("/home");
+                await axios.post("http://localhost:8000/v1/Produk/email")
                 berhasil()
+                await sleep(2 * 1000)
+                navigasi("/home")
+                // navigasi("/home");npm ru
             } else {
-
                 await axios.post("http://localhost:8000/v1/Produk/add", {
                     id_penjual: id_penjual,
                     id_kategori: id_kategori,
@@ -137,6 +143,8 @@ export default function InfoProduk() {
                 })
                 // navigasi("/home");
                 berhasil()
+                await sleep(2 * 1000)
+                navigasi('/home')
             }
         } catch (error) {
             console.log(error);
@@ -148,6 +156,14 @@ export default function InfoProduk() {
             gagal(pesan)
         }
     }
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        const { value = "" } = e.target;
+        const parsedValue = value.replace(/[^\d,]/gi, "");
+        SetHarga(parsedValue);
+    };
+
     const Kembali = () => {
         navigasi("/home")
     }
@@ -177,11 +193,19 @@ export default function InfoProduk() {
                         <Form.Group className="mb-3" >
                             <Col md="9" lg="7" sm="7" style={{ marginRight: " auto", marginLeft: " auto" }}>
                                 <Form.Label>Harga Produk</Form.Label>
-                                <Form.Control style={{
+                                {/* <Form.Control style={{
                                     border: '1px solid #D0D0D0',
                                     borderRadius: '16px',
                                     padding: '12px 16px',
-                                }} type="text" placeholder="Harga Produk" className="form-control" value={harga} onChange={(e) => SetHarga(e.target.value)} /></Col>
+                                }} type="text" placeholder="Harga Produk" className="form-control" value={harga} onChange={(e) => SetHarga(e.target.value)} /> */}
+                                <CurrencyFormat value={harga} onChange={handleChange} style={{
+                                    border: '1px solid #D0D0D0',
+                                    borderRadius: '16px',
+                                    padding: '12px 16px',
+                                }} className='form-control' displayType={'input'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp'} placeholder="Harga Produk" />
+                                {/* <CurrencyFormat value={harga} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp'} onChange={(e) => SetHarga(e.target.harga)} /> */}
+                                {console.log(harga)}
+                            </Col>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicKota">
                             <Col md="9" lg="7" sm="7" style={{ marginRight: " auto", marginLeft: " auto" }}>

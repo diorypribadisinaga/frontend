@@ -9,6 +9,7 @@ import Masuk from "./page/Masuk";
 import Preview from "./page/Preview";
 import PreviewProduk from "./page/PreviewProduk";
 import Register from "./page/Register";
+import UpdateProduk from "./page/UpdateProduk";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="daftarjual" element={<DaftarJual />} />
         <Route path="preview" element={<Preview />} />
         <Route path="preview/produk/:id" element={<PreviewProduk />} />
+        <Route path="update/produk/:id" element={<UpdateProduk />} />
       </Routes>
     </BrowserRouter >
   );

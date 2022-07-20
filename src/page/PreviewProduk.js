@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import style from "./styles/Preview.module.css"
 import { Button } from "react-bootstrap"
 import toast, { Toaster } from 'react-hot-toast';
+import swal from 'sweetalert';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import secondHand from "../image/camera.png"
@@ -49,6 +50,25 @@ export default function PreviewProduk() {
         }).format(money);
     };
 
+    const deleteProduk = async (idproduk) => {
+        swal({
+            title: "Are you sure?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.delete(`http://localhost:8000/v1/produk/delete/${idproduk}`)
+                    swal("Berhasil dihapus", {
+                        icon: "success",
+                    });
+                    navigasi("/home")
+                }
+            });
+    }
+
     const navigasi = useNavigate()
     const content1 = <div>
         <BsListUl onClick={() => navigasi("/daftarjual")} style={{ width: "47px", height: "25px", cursor: "pointer" }} />
@@ -81,8 +101,9 @@ export default function PreviewProduk() {
                     </div>
                     <div className='col-lg-4'>
                         <div className={style.kanan}>
-                            <strong>{product.nama_produk}</strong><br />
-                            <small>{kategori.macam}(Kategori)</small>
+                            <strong style={{ fontSize: "22px" }}>{product.nama_produk}</strong><br />
+                            <small style={{ fontSize: "16px" }}>{kategori.macam}(Kategori)</small><br />
+                            <small style={{ fontSize: "15px" }}>{product.stok}(Jumlah Stok)</small>
                             <strong className='mt-3 d-block'>{formatRupiah(product.harga)}</strong>
                             <div className='row'>
                                 <div className='col-lg-12 col-12'>
@@ -93,22 +114,31 @@ export default function PreviewProduk() {
                                         padding: '12px 16px',
                                     }}>
                                         Saya Tertarik dan Ingin Nego
-                                    </Button> : <Button className="form-control mt-2" style={{
-                                        background: '#7126B5',
-                                        borderColor: '#7126B5',
-                                        borderRadius: '16px',
-                                        padding: '12px 16px',
-                                    }}>
-                                        Update Produk
-                                    </Button>}
-                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Masukan Harga Tawaranmu</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </Button> : <div>
+                                        <Button onClick={() => navigasi(`/update/produk/${id}`)} className="form-control mt-2" style={{
+                                            background: '#7126B5',
+                                            borderColor: '#7126B5',
+                                            borderRadius: '16px',
+                                            padding: '12px 16px',
+                                        }}>
+                                            Update Produk
+                                        </Button>
+                                        <button onClick={() => deleteProduk(id)} className="form-control mt-2 btn-outline-danger" style={{
+                                            borderRadius: '16px',
+                                            padding: '12px 16px',
+                                            textAlign: "center"
+                                        }}>
+                                            Delete Produk
+                                        </button>
+                                    </div>}
+                                    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div className="modal-dialog modal-dialog-centered">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title" id="staticBackdropLabel">Masukan Harga Tawaranmu</h5>
+                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div className="modal-body">
                                                     <p>Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan segera dihubungi penjual.</p>
                                                     <div id={style.modal} style={{ display: "flex" }}>
                                                         <div>
