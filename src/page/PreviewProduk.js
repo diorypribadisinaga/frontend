@@ -24,15 +24,15 @@ export default function PreviewProduk() {
 
     const fetchdata = async () => {
         try {
-            let response = await axios.get("http://localhost:8000/token", {
+            let response = await axios.get("https://serversinaga.herokuapp.com/token", {
                 withCredentials: true
             })
             const decoded = jwt_decode(response.data.accessToken)
-            response = await fetch(`http://localhost:8000/user/${decoded.id}`)
+            response = await fetch(`https://serversinaga.herokuapp.com/user/${decoded.id}`)
             const data = await response.json()
             SetUser(data)
-            // response = await axios.get(`http://localhost:8000/v1/Produk/preview/${id}`)
-            response = await axios.get(`http://localhost:8000/v1/Produk/preview/${id}`)
+            // response = await axios.get(`https://serversinaga.herokuapp.com/v1/Produk/preview/${id}`)
+            response = await axios.get(`https://serversinaga.herokuapp.com/v1/Produk/preview/${id}`)
             // console.log(response.data.Kategori.macam)
             setKategori(response.data.Kategori)
             setPenjual(response.data.User)
@@ -60,7 +60,7 @@ export default function PreviewProduk() {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`http://localhost:8000/v1/produk/delete/${idproduk}`)
+                    axios.delete(`https://serversinaga.herokuapp.com/v1/produk/delete/${idproduk}`)
                     swal("Berhasil dihapus", {
                         icon: "success",
                     });

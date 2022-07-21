@@ -26,7 +26,7 @@ export default function Login() {
     const login = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8000/login", {
+            const response = await axios.post("https://serversinaga.herokuapp.com/login", {
                 email: email,
                 password: password,
             }, {
@@ -40,7 +40,7 @@ export default function Login() {
                 SetLink(data.email)
                 return
             }
-            await axios.get("http://localhost:8000/user",
+            await axios.get("https://serversinaga.herokuapp.com/user",
                 {
                     headers: {
                         "Authorization": `Bearer ${data.accessToken}`

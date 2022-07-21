@@ -19,14 +19,14 @@ export default function CardSeller() {
 
     const fetchdata = async () => {
         try {
-            let response = await axios.get("http://localhost:8000/token", {
+            let response = await axios.get("https://serversinaga.herokuapp.com/token", {
                 withCredentials: true
             })
             const decoded = jwt_decode(response.data.accessToken)
-            response = await fetch(`http://localhost:8000/user/${decoded.id}`)
+            response = await fetch(`https://serversinaga.herokuapp.com/user/${decoded.id}`)
             const data = await response.json()
             SetUser(data)
-            response = await axios.get(`http://localhost:8000/v1/Produk/${decoded.id}`)
+            response = await axios.get(`https://serversinaga.herokuapp.com/v1/Produk/${decoded.id}`)
             setProducts(response.data);
             console.log(response.data)
         } catch (error) {
@@ -34,7 +34,7 @@ export default function CardSeller() {
         }
     }
     const ada = async () => {
-        await fetch(`http://localhost:8000/user/${user.id}`)
+        await fetch(`https://serversinaga.herokuapp.com/user/${user.id}`)
     }
     useEffect(() => {
         if (!ada) {
